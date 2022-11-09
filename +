@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+echo "Servidor Transfer Unite Recursive International Protocol: TURIP"
+
+echo "(0) LISTEN"
+MSG=`nc -l 2223`
+HANDSHAKE=`echo $MSG | cut -d " " -f 1`
+IP_CLIENT=`echo $MSG | cut -d " " -f 2`
+
+if [ "$MSG" != "HOLI_TURIP" ]
+then
+	echo "ERROR 1: Handshake incorrecto"
+
+	echo "KO_TURIP" | nc $IP_CLIENT 2223
+
+	exit 1
+fi
+
+echo "OK_TURIP" | nc $IP_CLIENT 2223
