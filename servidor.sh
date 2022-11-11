@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-PORT="2225"
+PORT="2223"
 echo "Servidor Transfer Unite Recursive International Protocol: TURIP"
 
 echo "(0) LISTEN: Handshake"
@@ -33,8 +33,6 @@ FILE_NAME=`nc -l $PORT | cut -d " " -f 2`
 
 if [ "$PREFIX" != "FILE_NAME" ]
 then
-	echo "ERROR 2: Nombre de archivo mal formado"
-
 	echo "KO_FILE_NAME" | nc $IP_CLIENT $PORT
 	
 	exit 2
@@ -42,9 +40,9 @@ fi
 
 echo "OK_FILE_NAME" | nc $IP_CLIENT $PORT
 
+echo "(8) LISTEN"
 
+nc -l $PORT > inbox/$FILE_NAME
 
-
-exit 0
 
 exit 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-PORT="2225"
+PORT="2223"
 SERVER_AD="$SERVER_AD"
 
 echo "Cliente TURIP"
@@ -24,13 +24,24 @@ fi
 
 echo "(5) SEND: Nombre de archivo"
 
-echo "FILE_NAME vaca.vaca" | nc $SERVER_AD $PORT
+FILE_NAME="vaca.vaca"
+
+echo "FILE_NAME $FILE_NAME" | nc $SERVER_AD $PORT
 
 echo "(6) LISTEN: Comprobación nombre de archivo"
 
 MSG=`nc -l $PORT`
 
 
+if [ "$MSG" != "OK_FILE_NAME" ]
+then
+	echo "ERROR 2: Nombre de archivo incorrecto"
+	exit 2
+fi
+
+echo "(9) SEND: Datos de vaca"
+
+cat vacas/$FILE_NAME | nc $SERVER_AD $PORT
 
 
 exit 0
